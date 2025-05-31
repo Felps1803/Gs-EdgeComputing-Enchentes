@@ -49,3 +49,8 @@ Sistema envia dados JSON com: nível da água, chuva, vento e classificação de
 
 ## Link para o projeto
 <a href="https://wokwi.com/projects/432227297319419905">Link pro projeto</a> 
+
+## Desenvolvedores
+- Felipe Silva, RM559848
+- Rafael Mandel, RM560333
+- Luis Filipe Crivellaro RM560877
