@@ -48,4 +48,4 @@ Sistema de **sensores edge distribuídos** que coletam dados ambientais em tempo
 Sistema envia dados JSON com: nível da água, chuva, vento e classificação de risco.
 
 ## Link para o projeto
-
+<a href="https://wokwi.com/projects/432227297319419905">Link pro projeto</a> 
