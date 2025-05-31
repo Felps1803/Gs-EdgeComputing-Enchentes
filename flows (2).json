@@ -1,0 +1,353 @@
+[
+    {
+        "id": "8f299be470116ffe",
+        "type": "tab",
+        "label": "Monitoramento Enchentes",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "191e0336d80204fc",
+        "type": "serial in",
+        "z": "8f299be470116ffe",
+        "name": "Arduino Serial",
+        "serial": "serial-port",
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "593e92bbf9242fdf"
+            ]
+        ]
+    },
+    {
+        "id": "593e92bbf9242fdf",
+        "type": "json",
+        "z": "8f299be470116ffe",
+        "name": "Parse JSON",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 500,
+        "y": 300,
+        "wires": [
+            [
+                "3a129f715ff3601e",
+                "d3f49c81999ee896",
+                "b0db8faae77a9acf",
+                "2e3b5ae0cc652a88",
+                "d636d8fc0d0c18f2"
+            ]
+        ]
+    },
+    {
+        "id": "3a129f715ff3601e",
+        "type": "function",
+        "z": "8f299be470116ffe",
+        "name": "chuva",
+        "func": "msg.payload = msg.payload.chuva;\nreturn msg;",
+        "outputs": 1,
+        "x": 670,
+        "y": 240,
+        "wires": [
+            [
+                "d312b1f6ab2771f8"
+            ]
+        ]
+    },
+    {
+        "id": "d3f49c81999ee896",
+        "type": "function",
+        "z": "8f299be470116ffe",
+        "name": "vento",
+        "func": "msg.payload = msg.payload.vento;\nreturn msg;",
+        "outputs": 1,
+        "x": 670,
+        "y": 300,
+        "wires": [
+            [
+                "09aa259d0a11b501"
+            ]
+        ]
+    },
+    {
+        "id": "b0db8faae77a9acf",
+        "type": "function",
+        "z": "8f299be470116ffe",
+        "name": "nível água",
+        "func": "msg.payload = msg.payload.nivel_agua_cm;\nreturn msg;",
+        "outputs": 1,
+        "x": 690,
+        "y": 360,
+        "wires": [
+            [
+                "bfc3814285c9412a"
+            ]
+        ]
+    },
+    {
+        "id": "2e3b5ae0cc652a88",
+        "type": "function",
+        "z": "8f299be470116ffe",
+        "name": "risco texto",
+        "func": "msg.payload = 'Risco atual: ' + msg.payload.risco.toUpperCase();\nreturn msg;",
+        "outputs": 1,
+        "x": 690,
+        "y": 420,
+        "wires": [
+            [
+                "cf6f5c9870d3e249"
+            ]
+        ]
+    },
+    {
+        "id": "d312b1f6ab2771f8",
+        "type": "ui_gauge",
+        "z": "8f299be470116ffe",
+        "name": "",
+        "group": "group-dashboard",
+        "order": 1,
+        "width": "6",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Chuva",
+        "label": "valor",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 1023,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 300,
+        "seg2": 700,
+        "diff": false,
+        "className": "",
+        "x": 930,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "09aa259d0a11b501",
+        "type": "ui_gauge",
+        "z": "8f299be470116ffe",
+        "name": "",
+        "group": "group-dashboard",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "gtype": "gage",
+        "title": "Vento",
+        "label": "km/h",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": 30,
+        "seg2": 60,
+        "diff": false,
+        "className": "",
+        "x": 930,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "bfc3814285c9412a",
+        "type": "ui_gauge",
+        "z": "8f299be470116ffe",
+        "name": "",
+        "group": "group-dashboard",
+        "order": 3,
+        "width": "6",
+        "height": "4",
+        "gtype": "gage",
+        "title": "Nível da água (cm)",
+        "label": "cm",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "30",
+        "diff": false,
+        "className": "",
+        "x": 940,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "cf6f5c9870d3e249",
+        "type": "ui_text",
+        "z": "8f299be470116ffe",
+        "group": "group-dashboard",
+        "order": 4,
+        "width": 6,
+        "height": 1,
+        "name": "Texto Risco",
+        "label": "Risco:",
+        "format": "{{msg.payload}}",
+        "layout": "",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": "",
+        "color": "#000000",
+        "x": 920,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "d636d8fc0d0c18f2",
+        "type": "mqtt out",
+        "z": "8f299be470116ffe",
+        "name": "Enviar para MQTT",
+        "topic": "enchente/dados",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "mqtt-local",
+        "x": 710,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "simulator_inject",
+        "type": "inject",
+        "z": "8f299be470116ffe",
+        "name": "Simular Cenário Normal",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"chuva\": 150, \"vento\": 25, \"nivel_agua_cm\": 15.5, \"risco\": \"baixo\"}",
+        "payloadType": "str",
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "593e92bbf9242fdf"
+            ]
+        ]
+    },
+    {
+        "id": "simulator_inject2",
+        "type": "inject",
+        "z": "8f299be470116ffe",
+        "name": "Simular Cenário Atenção",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"chuva\": 450, \"vento\": 45, \"nivel_agua_cm\": 25.0, \"risco\": \"moderado\"}",
+        "payloadType": "str",
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "593e92bbf9242fdf"
+            ]
+        ]
+    },
+    {
+        "id": "simulator_inject3",
+        "type": "inject",
+        "z": "8f299be470116ffe",
+        "name": "Simular Cenário Crítico",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"chuva\": 850, \"vento\": 80, \"nivel_agua_cm\": 35.2, \"risco\": \"alto\"}",
+        "payloadType": "str",
+        "x": 270,
+        "y": 440,
+        "wires": [
+            [
+                "593e92bbf9242fdf"
+            ]
+        ]
+    },
+    {
+        "id": "serial-port",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB0",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "group-dashboard",
+        "type": "ui_group",
+        "name": "Monitoramento",
+        "tab": "tab-dashboard",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "mqtt-local",
+        "type": "mqtt-broker",
+        "name": "Mosquitto Local",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "tab-dashboard",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
